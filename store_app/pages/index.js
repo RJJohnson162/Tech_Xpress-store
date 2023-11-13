@@ -1,42 +1,44 @@
-import { mongooseConnect } from "@/lib/mongoose";
-import Featured from "@/components/Featured";
 import Header from "@/components/Header";
+import Featured from "@/components/Featured";
 import { Product } from "@/models/Product";
+import { mongooseConnect } from "@/lib/mongoose";
+import NewProducts from "@/components/NewProducts";
+import styled from "styled-components";
 
-// Define your HomePage component
-const HomePage = ({ featuredProduct }) => {
+const Bg = styled.div`
+    background-color: #222;
+    color: #fff;
+    padding: 0;
+    min-height: 100vh;
+`;
+
+export default function HomePage({ featuredProduct, newProducts }) {
     return (
-        <div>
+        <Bg>
             <Header />
             <Featured product={featuredProduct} />
-        </div>
+            <NewProducts products={newProducts} />
+        </Bg>
     );
-};
-
-// Define the server-side props fetching function
-export async function getServerSideProps() {
-    try {
-        const featuredProductId = "65241a7aa1bad47106869f42";
-        await mongooseConnect();
-
-        console.log("Before findById");
-        const featuredProduct = await Product.findById(featuredProductId);
-        console.log("After findById", featuredProduct);
-        return {
-            props: {
-                featuredProduct: JSON.parse(JSON.stringify(featuredProduct)),
-            },
-        };
-    } catch (error) {
-        console.error("Error during server-side rendering:", error);
-
-        return {
-            props: {
-                featuredProduct: null, // Set featuredProduct to null in case of an error
-            },
-        };
-    }
 }
 
-// Export the HomePage component as the default export
-export default HomePage;
+export async function getServerSideProps() {
+    await mongooseConnect();
+
+    // Fetch a random product
+    const randomProduct = await Product.aggregate([{ $sample: { size: 1 } }]);
+    const featuredProduct = randomProduct[0];
+
+    // Fetch new products
+    const newProducts = await Product.find({}, null, {
+        sort: { _id: -1 },
+        limit: 10,
+    });
+
+    return {
+        props: {
+            featuredProduct: JSON.parse(JSON.stringify(featuredProduct)),
+            newProducts: JSON.parse(JSON.stringify(newProducts)),
+        },
+    };
+}
