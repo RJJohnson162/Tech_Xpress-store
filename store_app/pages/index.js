@@ -1,6 +1,7 @@
 import Header from "@/components/Header";
 import Featured from "@/components/Featured";
 import { Product } from "@/models/Product";
+import { Category } from "@/models/Categories";
 import { mongooseConnect } from "@/lib/mongoose";
 import NewProducts from "@/components/NewProducts";
 import styled from "styled-components";
@@ -32,7 +33,7 @@ export async function getServerSideProps() {
     // Fetch new products
     const newProducts = await Product.find({}, null, {
         sort: { _id: -1 },
-        limit: 10,
+        limit: 12,
     });
 
     return {

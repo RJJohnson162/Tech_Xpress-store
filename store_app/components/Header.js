@@ -53,10 +53,19 @@ const NavLink = styled(Link)`
     border-radius: 10px;
     text-decoration: none;
     padding: 15px 10px;
-    transition: 0.5s;
+    transition: ease-in-out .5s;
 
     @media screen and (min-width: 768px) {
         padding: 0;
+        &:hover{
+            background-color: transparent;
+            color: #0cf549;
+            font-weight: 500;
+            border-bottom: 1px solid #0cf549;
+            border-radius: 10px;
+            letter-spacing: .5px;
+            padding: 0 5px;
+        }
     }
     @media screen and (max-width: 768px) {
         &:hover {
@@ -69,10 +78,10 @@ const NavLink = styled(Link)`
 const CartCircle = styled.span`
     border-radius: 50%;
     width: 6px;
-    height: 6px; /* Set the height to the same value as the width for a perfect circle */
+    height: 4px;
     background-color: #fff;
     color: #01a249;
-    padding: 3px 6px; /* Use a colon instead of an equal sign */
+    padding: 0 4px;
 `;
 
 
@@ -105,7 +114,6 @@ export default function Header() {
                         <NavLink href={"/"}>Home</NavLink>
                         <NavLink href={"/products"}>All products</NavLink>
                         <NavLink href={"/categories"}>Categories</NavLink>
-                        <NavLink href={"/account"}>Account</NavLink>
                         <NavLink href={"/cart"}>
                             Cart <CartCircle>{cartProducts.length}</CartCircle>
                         </NavLink>

@@ -31,25 +31,25 @@ border-radius: 10px;
 padding: 30px;
 box-shadow: 10px 10px 10px #111, -5px -5px 20px #111;
     h2{
-      color: #00ff44;
+        color: #00ff44;
     }
     input{
-      border: 1px solid #11c241;
-      background-color: transparent;
-      font-size: 1rem;
-      height: 40px;
-      color: #fff;
+        border: 1px solid #11c241;
+        background-color: transparent;
+        font-size: 1rem;
+        height: 40px;
+        color: #fff;
     }
     Button{
-      background-color: #11c241;
-      color: #fff;
-      font-size: 1rem;
-      text-align: center;
-      transition: .5s;
-      &:hover{
-          cursor: pointer;
-          background: #fff;
-          color: #11c241;
+        background-color: #11c241;
+        color: #fff;
+        font-size: 1rem;
+        text-align: center;
+        transition: .5s;
+        &:hover{
+            cursor: pointer;
+            background: #fff;
+            color: #11c241;
     }
 `;
 
@@ -151,6 +151,7 @@ export default function CartPage() {
     }
 
     if (isSuccess) {
+        clearCart();
         return (
             <>
                 <Header />
